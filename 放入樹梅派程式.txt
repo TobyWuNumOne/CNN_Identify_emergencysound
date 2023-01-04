@@ -2,5 +2,8 @@ untitled17.py		錄音切割程式
 mfccs_value.py 		轉mfcc
 model_check 資料夾	訓練好的模型
 
+<<<<<<< HEAD
 121221
 RUPfgfg
+=======
+>>>>>>> parent of edc319b (Update 放入樹梅派程式.txt)
