@@ -40,7 +40,7 @@ while(1):
              wf.close()
              path=str(count)+".wav"
              count=count+0.5
-             mf.displaymfccs(path)
+             mf.displaymfccprediction(path)
     """stream.stop_stream()             # 停止錄音
     stream.close()                   # 關閉串流
     p.terminate()"""
