@@ -7,3 +7,4 @@ model_check 資料夾	訓練好的模型
 RUPfgfg
 =======
 >>>>>>> parent of edc319b (Update 放入樹梅派程式.txt)
+  2023/01/05
