@@ -12,7 +12,7 @@ import librosa.display
 import matplotlib.pyplot as plt
 import sklearn
 import numpy
-
+import wave
 from keras.models import load_model
 import librosa.display
 import numpy as np
@@ -49,6 +49,7 @@ def displaySpectrogram(path):
        
         plt.show()
 def displaymfccprediction(path):
+
     labels = [
             'ambulance',
             "enviroment",
@@ -62,7 +63,10 @@ def displaymfccprediction(path):
     #warnings.simplefilter("ignore")
     model     = keras.models.load_model("C:\\Users\\User\\Desktop\\0103\\voice_data\\models\\simple-train-nb9.hdf5")
     data, sr = librosa.load(path)
-    print(len(data))
+    
+    wf = wave.open(path, 'r')
+    rate=wf.getframerate()
+    print(rate)
     #print(sr)
     
     #fig, ax = plt.subplots()
@@ -70,7 +74,9 @@ def displaymfccprediction(path):
     #mfccs = sklearn.preprocessing.scale(mfccs)
     #print(np.shape(mfccs))
     normalized_mfcc = librosa.util.normalize(mfccs) #-1~1
-    #img = librosa.display.specshow(normalized_mfcc,x_axis="time") 
+    #print(normalized_mfcc.shape)
+    normalized_mfcc=np.resize(normalized_mfcc,(13,44))
+    img = librosa.display.specshow(normalized_mfcc,x_axis="time") 
     mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
     #fig.colorbar(img, ax=ax)
     

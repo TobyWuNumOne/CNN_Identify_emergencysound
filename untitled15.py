@@ -11,7 +11,7 @@ import mfccs_value as mf
 chunk = 1024                     # 記錄聲音的樣本區塊大小
 sample_format = pyaudio.paInt16  # 樣本格式，可使用 paFloat32、paInt32、paInt24、paInt16、paInt8、paUInt8、paCustomFormat
 channels = 1                     # 聲道數量
-fs = 45057
+fs = 22050
                        # 取樣頻率，常見值為 44100 ( CD )、48000 ( DVD )、22050、24000、12000 和 11025。
 seconds = 1                      # 錄音秒數
 filename = "oxxostudio.wav"      # 錄音檔名
@@ -31,12 +31,13 @@ while(1):
         frames.append(data)
           # 將聲音記錄到串列中
           
-        if i==(44*count):
+        if i==(22*count):
+             path=str(count)+".wav"
              wf = wave.open(str(count)+".wav", 'wb')   # 開啟聲音記錄檔
              wf.setnchannels(channels)        # 設定聲道
              wf.setsampwidth(p.get_sample_size(sample_format))  # 設定格式
              wf.setframerate(fs)              # 設定取樣頻率
-             wf.writeframes(b''.join(frames[int(44*(count-1)):int(44*count)])) # 存檔
+             wf.writeframes(b''.join(frames[int(22*(count-1)):int(22*count)])) # 存檔
              wf.close()
              path=str(count)+".wav"
              count=count+0.5
