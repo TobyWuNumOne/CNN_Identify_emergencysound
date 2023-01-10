@@ -19,6 +19,7 @@ filename = "oxxostudio.wav"      # 錄音檔名
 p = pyaudio.PyAudio()            # 建立 pyaudio 物件
 
 print("開始錄音...")
+path="D:\\voice_data\\a\\data2_22050\\"
 while(1):
 # 開啟錄音串流
     count=1
@@ -26,24 +27,25 @@ while(1):
     stream = p.open(format=sample_format, channels=channels, rate=fs, frames_per_buffer=chunk, input=True)
     frames = []  
     j=0
-    for i in range(0,2200):
+    for i in range(0,19*22):
         data = stream.read(chunk)
         frames.append(data)
           # 將聲音記錄到串列中
           
-        if i==(22*count):
-             path=str(count)+".wav"
-             wf = wave.open(str(count)+".wav", 'wb')   # 開啟聲音記錄檔
+        if i==(44*count):
+             filepath=path+str(count)+".wav"
+             wf = wave.open(filepath, 'wb')   # 開啟聲音記錄檔
              wf.setnchannels(channels)        # 設定聲道
              wf.setsampwidth(p.get_sample_size(sample_format))  # 設定格式
              wf.setframerate(fs)              # 設定取樣頻率
              wf.writeframes(b''.join(frames[int(22*(count-1)):int(22*count)])) # 存檔
              wf.close()
-             path=str(count)+".wav"
+             
              count=count+0.5
-             mf.displaymfccprediction(path)
-    """stream.stop_stream()             # 停止錄音
+             mf.displaymfccs(filepath)
+    stream.stop_stream()             # 停止錄音
     stream.close()                   # 關閉串流
-    p.terminate()"""
+    p.terminate()
+    break
     print('錄音結束...')
     
