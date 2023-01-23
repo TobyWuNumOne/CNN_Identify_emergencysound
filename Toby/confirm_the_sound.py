@@ -11,8 +11,8 @@ from scipy.fftpack import fft, ifft, irfft
 from threading import Lock, Thread
 import codecs
 
-mpl.rcParams["font.sans-serif"] = ["SimHei"]
-mpl.rcParams["font.sans-serif"] = ["SimHei"]  # 顯示中文
+# mpl.rcParams["font.sans-serif"] = ["SimHei"]
+# mpl.rcParams["font.sans-serif"] = ["SimHei"]  # 顯示中文
 mpl.rcParams["axes.unicode_minus"] = False  # 顯示負號
 
 
@@ -29,6 +29,7 @@ class Audiowave:
         self.N = 0
         self.data = []
         self.dataall = []
+        self.dataalll = []
         np.array(self.dataall)
         # plt.figure(figsize=(16, 8))
         self.fig, self.ax = plt.subplots(2, 1, figsize=(8, 6))
@@ -71,6 +72,7 @@ class Audiowave:
         self.wf.setnchannels(self.wavechannel)  # 聲道設置
         self.wf.setsampwidth(self.p.get_sample_size(format))  # 採樣位數設置
         self.wf.setframerate(self.framerate)
+
         self.wf1 = wave.open(r"D:\pythonProject2\wav\test1.wav", "wb")
         self.wf1.setnchannels(self.wavechannel)  # 聲道設置
         self.wf1.setsampwidth(self.p.get_sample_size(format))  # 採樣位數設置
@@ -146,112 +148,112 @@ class Audiowave:
 
         return freq, fredata
 
-    def wavedraw1(self, filedir):
-        self.waveopen(filedir)
-        timedata = self.wavehex_to_DEC(self.wavedata, self.wavewidth, self.wavechannel)
-        fredata = self.to_fft(self.nframes, timedata[1][0])
+    # def wavedraw1(self, filedir):
+    #     self.waveopen(filedir)
+    #     timedata = self.wavehex_to_DEC(self.wavedata, self.wavewidth, self.wavechannel)
+    #     fredata = self.to_fft(self.nframes, timedata[1][0])
 
-        plt.figure(figsize=(16, 8))
-        plt.subplot(2, 1, 1)
-        plt.plot(timedata[0], timedata[1][0])
-        plt.xlabel("Time(S)")
-        plt.subplot(212)
-        plt.plot(fredata[0], fredata[1])
-        plt.xlim(0, 800)
-        plt.xlabel("Freq(Hz)")
+    #     plt.figure(figsize=(16, 8))
+    #     plt.subplot(2, 1, 1)
+    #     plt.plot(timedata[0], timedata[1][0])
+    #     plt.xlabel("Time(S)")
+    #     plt.subplot(212)
+    #     plt.plot(fredata[0], fredata[1])
+    #     plt.xlim(0, 800)
+    #     plt.xlabel("Freq(Hz)")
 
-        plt.subplots_adjust(hspace=0.4)
-        plt.show()
+    #     plt.subplots_adjust(hspace=0.4)
+    #     plt.show()
 
-    def wavedrawall(self, filedir):
-        self.waveopen(filedir)
-        n = self.wavechannel
-        timedata = self.wavehex_to_DEC(self.wavedata, self.wavewidth, self.wavechannel)
-        xtimedata = timedata[0]
-        ytimedata = timedata[1]
-        # print(ytimedata)
-        i = 0
-        plt.figure(figsize=(16, 8))
-        # plt.legend(prop=font_set)
-        for i in range(0, n):
-            a = plt.subplot(2, n, i + 1)
-            a.set_title("track" + str(i + 1))
-            plt.plot(xtimedata, ytimedata[i])
-            plt.xlabel("Time(S)")
-            # print(ytimedata[i])
-            fredata = self.to_fft(self.nframes, ytimedata[i])
-            plt.subplot(2, n, i + 1 + n)
-            plt.plot(fredata[0], fredata[1])
-            plt.xlim(0, 4000)
-            plt.xlabel("Freq(Hz)")
-        plt.subplots_adjust(hspace=0.4)
-        plt.show()
+    # def wavedrawall(self, filedir):
+    #     self.waveopen(filedir)
+    #     n = self.wavechannel
+    #     timedata = self.wavehex_to_DEC(self.wavedata, self.wavewidth, self.wavechannel)
+    #     xtimedata = timedata[0]
+    #     ytimedata = timedata[1]
+    #     # print(ytimedata)
+    #     i = 0
+    #     plt.figure(figsize=(16, 8))
+    #     # plt.legend(prop=font_set)
+    #     for i in range(0, n):
+    #         a = plt.subplot(2, n, i + 1)
+    #         a.set_title("track" + str(i + 1))
+    #         plt.plot(xtimedata, ytimedata[i])
+    #         plt.xlabel("Time(S)")
+    #         # print(ytimedata[i])
+    #         fredata = self.to_fft(self.nframes, ytimedata[i])
+    #         plt.subplot(2, n, i + 1 + n)
+    #         plt.plot(fredata[0], fredata[1])
+    #         plt.xlim(0, 4000)
+    #         plt.xlabel("Freq(Hz)")
+    #     plt.subplots_adjust(hspace=0.4)
+    #     plt.show()
 
-    def Dynamic_init(self):
+    # def Dynamic_init(self):
 
-        # self.fig.figsize(16,8)
-        # print(self.Timedata)
-        # Y_max=max(list(self.Timedata)
-        Y_max = max(self.Timedata) * 5 / 4
-        self.ax[0].set_xlim(0, int(self.time) * 5 / 4)
-        self.ax[0].set_ylim(-(Y_max), (Y_max))
-        self.ax[1].set_xlim(0, 10000)
-        # self.ax.set_ylim(0,20000)
-        (ln,) = self.ax[0].plot([], [], animated=False)
-        return (ln,)  # 返回曲線
+    #     # self.fig.figsize(16,8)
+    #     # print(self.Timedata)
+    #     # Y_max=max(list(self.Timedata)
+    #     Y_max = max(self.Timedata) * 5 / 4
+    #     self.ax[0].set_xlim(0, int(self.time) * 5 / 4)
+    #     self.ax[0].set_ylim(-(Y_max), (Y_max))
+    #     self.ax[1].set_xlim(0, 10000)
+    #     # self.ax.set_ylim(0,20000)
+    #     (ln,) = self.ax[0].plot([], [], animated=False)
+    #     return (ln,)  # 返回曲線
 
-    def Dynamic_updata(self, n):
-        # print("#####",n)
-        N = self.N
-        xdata = np.linspace(0, len(self.Timedata), len(self.Timedata) + 1)
-        # xdata.pop()
-        xdata = np.delete(xdata, -1)
-        ydata = self.Timedata
-        # print(len(xdata),len(ydata))
-        # print(ydata)
-        x_t = xdata[0 : int((n + 1) * N)] / self.framerate
-        # print(len(x_t))
-        y_t = ydata[0 : int((n + 1) * N)]
-        fre_data = self.Timedata[int(n * N) : int((n + 1) * N)]
-        if len(fre_data) > 0:
-            a = self.to_fft(N, fre_data)
-            x = a[0]
-            y = a[1]
-        else:
-            x = 0
-            y = 0
-        # print(x,y)
+    # def Dynamic_updata(self, n):
+    #     # print("#####",n)
+    #     N = self.N
+    #     xdata = np.linspace(0, len(self.Timedata), len(self.Timedata) + 1)
+    #     # xdata.pop()
+    #     xdata = np.delete(xdata, -1)
+    #     ydata = self.Timedata
+    #     # print(len(xdata),len(ydata))
+    #     # print(ydata)
+    #     x_t = xdata[0 : int((n + 1) * N)] / self.framerate
+    #     # print(len(x_t))
+    #     y_t = ydata[0 : int((n + 1) * N)]
+    #     fre_data = self.Timedata[int(n * N) : int((n + 1) * N)]
+    #     if len(fre_data) > 0:
+    #         a = self.to_fft(N, fre_data)
+    #         x = a[0]
+    #         y = a[1]
+    #     else:
+    #         x = 0
+    #         y = 0
+    #     # print(x,y)
 
-        (ln,) = self.ax[0].plot(x_t, y_t, "g-")
-        (ln1,) = self.ax[1].plot(x, y, "g-")
+    #     (ln,) = self.ax[0].plot(x_t, y_t, "g-")
+    #     (ln1,) = self.ax[1].plot(x, y, "g-")
 
-        # ln1=ln# 重新設置曲線的值
-        return (
-            ln,
-            ln1,
-        )
+    #     # ln1=ln# 重新設置曲線的值
+    #     return (
+    #         ln,
+    #         ln1,
+    #     )
 
-    def Dynamic_run(self, filedir):  #
-        self.waveopen(filedir)
-        FPS = 24
-        self.N = int(self.framerate / FPS)  # 每次fft取樣點數
-        self.Timedata = self.wavehex_to_DEC(
-            self.wavedata, self.wavewidth, self.wavechannel
-        )[1][0]
-        print(len(self.Timedata))
-        temp = list(
-            np.linspace(0, int(self.nframes / self.N), int(self.nframes / self.N) + 1)
-        )
-        # temp.pop()
-        ani = FuncAnimation(
-            self.fig,
-            self.Dynamic_updata,
-            frames=temp,
-            interval=self.N / self.framerate * 1000,
-            init_func=self.Dynamic_init,
-            blit=True,
-        )
-        plt.show()
+    # def Dynamic_run(self, filedir):  #
+    #     self.waveopen(filedir)
+    #     FPS = 24
+    #     self.N = int(self.framerate / FPS)  # 每次fft取樣點數
+    #     self.Timedata = self.wavehex_to_DEC(
+    #         self.wavedata, self.wavewidth, self.wavechannel
+    #     )[1][0]
+    #     print(len(self.Timedata))
+    #     temp = list(
+    #         np.linspace(0, int(self.nframes / self.N), int(self.nframes / self.N) + 1)
+    #     )
+    #     # temp.pop()
+    #     ani = FuncAnimation(
+    #         self.fig,
+    #         self.Dynamic_updata,
+    #         frames=temp,
+    #         interval=self.N / self.framerate * 1000,
+    #         init_func=self.Dynamic_init,
+    #         blit=True,
+    #     )
+    #     plt.show()
 
     def wavehex_to_DEC_n(self, wavedata, wavewidth, wavechannel):  # 錄音存儲數據十六進制數據轉換十進制
         # print("#####################")
@@ -333,7 +335,7 @@ class Audiowave:
         # print("###########################")
         # print(data)
         # print(wave_data)
-        self.stream1.write(data)  # 播放
+        # self.stream1.write(data)  # 播放    #暫時
         self.wf.writeframes(data)  # 寫入存儲
         self.wf1.writeframes(filter_data)  # 寫入存儲
         return data, filter_data

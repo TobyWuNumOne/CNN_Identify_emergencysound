@@ -62,7 +62,7 @@ def displaymfccprediction(path):
     data_label = []
     data_pred = []
     # warnings.simplefilter("ignore")
-    model = keras.models.load_model("./models/simple-train-nb30&25.hdf5")
+    model = keras.models.load_model("./models/simple-train-nb1.hdf5")
     data, sr = librosa.load(path)
 
     wf = wave.open(path, "r")
@@ -70,18 +70,21 @@ def displaymfccprediction(path):
     print(rate)
     # print(sr)
 
-    # fig, ax = plt.subplots()
+    fig, ax = plt.subplots()
     mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=13, dct_type=2, norm="ortho")
     # mfccs = sklearn.preprocessing.scale(mfccs)
     # print(np.shape(mfccs))
     normalized_mfcc = librosa.util.normalize(mfccs)  # -1~1
     # print(normalized_mfcc.shape)
     normalized_mfcc = np.resize(normalized_mfcc, (13, 44))
-    # img = librosa.display.specshow(normalized_mfcc, x_axis="time")
-    mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
-    # fig.colorbar(img, ax=ax)
 
-    # plt.show()
+    img = librosa.display.specshow(normalized_mfcc, x_axis="time")
+
+    mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
+
+    fig.colorbar(img, ax=ax)
+
+    plt.show()
     pred = model.predict(mfcc_reshaped)
     # print(pred)
     data_pred.append(pred)

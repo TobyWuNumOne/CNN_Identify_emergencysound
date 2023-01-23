@@ -10,6 +10,8 @@ import threading
 from scipy.fftpack import fft, ifft, irfft
 from threading import Lock, Thread
 import codecs
+import librosa.display
+from matplotlib import cm
 
 
 class Audiowave:
@@ -19,13 +21,14 @@ class Audiowave:
         self.wavewidth = 2
         self.wavechannel = 1
         self.framerate = 48000
-        self.fps = 24
+        self.fps = 1
         self.Timedata = []
         self.nframes = 0
         self.N = 0
         self.data = []
+        self.path = "./a/1.wav"
 
-        self.fig, self.ax = plt.subplots(3, 1, figsize=(10, 8))
+        self.fig, self.ax = plt.subplots(1, 1, figsize=(10, 8))
         # plt.subplot_tool()
         self.p = pyaudio.PyAudio()  # 實例化對象
 
@@ -126,32 +129,28 @@ class Audiowave:
 
     def Dynamic_micwave_init(self):  # 動態顯示圖像-初始化圖像
 
-        self.ax[0].set_xlim(0, 1 / self.fps)
-        self.ax[1].set_xlim(0, 2000)
-        self.ax[2].set_xlim(0, 2000)
-        # self.ax[2].set_xlim(0, 1)  # mfcc
+        self.ax.set_xlim(0, 1)
 
-        (ln,) = self.ax[0].plot([], [], animated=False)
-        return (ln,)  # 返回曲線
+        normalized_mfcc = self.mfcc()
+        (lm,) = self.ax.imshow(
+            normalized_mfcc, interpolation="nearest", cmap=cm.coolwarm, origin="lower"
+        )
+        return (lm,)  # 返回曲線
+
+    def mfcc(self):
+        data, sr = librosa.load(self.path)
+        mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=13, dct_type=2, norm="ortho")
+        normalized_mfcc = librosa.util.normalize(mfccs)
+
+        return normalized_mfcc
 
     def Dynamic_micwave_update(self, n):  # 動態顯示圖像-更新圖像
-        img = "./截圖 2023-01-03 下午10.25.51.png"
-        x, y = self.wavehex_to_DEC_n(self.data, self.wavewidth, self.wavechannel)
 
-        fre_x, fre_y = self.to_fft(self.waveCHUNK, y[0])
-
-        (ln,) = self.ax[0].plot(x, y[0], "g-")
-
-        (ln1,) = self.ax[1].plot(fre_x, fre_y, "g-")
-
-        # (ln1,) = self.ax.ax[2].imshow(img, cmap="gray")
-        # self.ax.ax[2].axis("off")
-        # c = self.ax[2].imshow(img)  # mabey# mabey #TODO
-
-        return (
-            ln,
-            ln1,
+        normalized_mfcc = self.mfcc()
+        (lm,) = self.ax.imshow(
+            normalized_mfcc, interpolation="nearest", cmap=cm.coolwarm, origin="lower"
         )
+        return (lm,)
 
     def Dynamic_micwave_run(self):  # 動態顯示圖像
 
