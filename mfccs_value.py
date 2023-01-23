@@ -18,6 +18,12 @@ import librosa.display
 import numpy as np
 import keras
 import os
+import sys
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+sys.path.append(BASE_DIR)
 
 
 def displaymfccs(path):
@@ -30,9 +36,9 @@ def displaymfccs(path):
     normalized_mfcc = librosa.util.normalize(mfccs)
     fig, ax = plt.subplots()
     print(normalized_mfcc.shape)
-    img = librosa.display.specshow(normalized_mfcc, x_axis="time", ax=ax)
-    fig.colorbar(img, ax=ax)
-    plt.show()
+    # img = librosa.display.specshow(normalized_mfcc, x_axis="time", ax=ax)
+    # fig.colorbar(img, ax=ax)
+    # plt.show()
 
 
 def displaySpectrogram(path):
@@ -78,13 +84,13 @@ def displaymfccprediction(path):
     # print(normalized_mfcc.shape)
     normalized_mfcc = np.resize(normalized_mfcc, (13, 44))
 
-    img = librosa.display.specshow(normalized_mfcc, x_axis="time")
+    # img = librosa.display.specshow(normalized_mfcc, x_axis="time")
 
     mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
 
-    fig.colorbar(img, ax=ax)
+    # fig.colorbar(img, ax=ax)
 
-    plt.show()
+    # plt.show()
     pred = model.predict(mfcc_reshaped)
     # print(pred)
     data_pred.append(pred)

@@ -8,6 +8,8 @@ Created on Thu Dec 29 14:01:26 2022
 import pyaudio
 import wave
 import mfccs_value as mf
+import os
+import sys
 
 chunk = 1024  # 記錄聲音的樣本區塊大小
 sample_format = (
@@ -16,7 +18,7 @@ sample_format = (
 channels = 1  # 聲道數量
 fs = 22050
 # 取樣頻率，常見值為 44100 ( CD )、48000 ( DVD )、22050、24000、12000 和 11025。
-seconds = 1  # 錄音秒數
+# seconds = 1  # 錄音秒數
 filename = "oxxostudio.wav"  # 錄音檔名
 
 p = pyaudio.PyAudio()  # 建立 pyaudio 物件
@@ -35,7 +37,7 @@ while 1:
         input=True,
     )
     frames = []
-    j = 0
+
     for i in range(0, 19 * 22):
         data = stream.read(chunk, exception_on_overflow=False)
         frames.append(data)
@@ -59,3 +61,8 @@ while 1:
     p.terminate()
     break
     print("錄音結束...")
+
+    self.wf = wave.open(r"D:\pythonProject2\wav\test.wav", "wb")
+    self.wf.setnchannels(self.wavechannel)  # 聲道設置
+    self.wf.setsampwidth(self.p.get_sample_size(format))  # 採樣位數設置
+    self.wf.setframerate(self.framerate)
