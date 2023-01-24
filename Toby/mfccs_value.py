@@ -40,20 +40,20 @@ def displaymfccs(path):
     # plt.show()
 
 
-def displaySpectrogram(path):
+# def displaySpectrogram(path):
 
-    filepath = path
-    x, sr = librosa.load(filepath)
-    # compute power spectrogram with stft(short-time fourier transform):
-    # 基于stft，计算power spectrogram
-    spectrogram = librosa.amplitude_to_db(librosa.stft(x))
+#     filepath = path
+#     x, sr = librosa.load(filepath)
+#     # compute power spectrogram with stft(short-time fourier transform):
+#     # 基于stft，计算power spectrogram
+#     spectrogram = librosa.amplitude_to_db(librosa.stft(x))
 
-    print(len(x))
-    # show
-    librosa.display.specshow(spectrogram, y_axis="log")
-    plt.colorbar(format="%+2.0f dB")
+#     print(len(x))
+#     # show
+#     librosa.display.specshow(spectrogram, y_axis="log")
+#     plt.colorbar(format="%+2.0f dB")
 
-    plt.show()
+#     plt.show()
 
 
 def displaymfccprediction(path):
@@ -83,13 +83,13 @@ def displaymfccprediction(path):
     # print(normalized_mfcc.shape)
     normalized_mfcc = np.resize(normalized_mfcc, (13, 44))
 
-    img = librosa.display.specshow(normalized_mfcc, x_axis="time")
+    # img = librosa.display.specshow(normalized_mfcc, x_axis="time")
 
     mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
 
-    fig.colorbar(img, ax=ax)
+    # fig.colorbar(img, ax=ax)
 
-    plt.show()
+    # plt.show()
     pred = model.predict(mfcc_reshaped)
     # print(pred)
     data_pred.append(pred)

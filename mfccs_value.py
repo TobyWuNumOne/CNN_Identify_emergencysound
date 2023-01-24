@@ -41,20 +41,20 @@ def displaymfccs(path):
     # plt.show()
 
 
-def displaySpectrogram(path):
+# def displaySpectrogram(path):
 
-    filepath = path
-    x, sr = librosa.load(filepath)
-    # compute power spectrogram with stft(short-time fourier transform):
-    # 基于stft，计算power spectrogram
-    spectrogram = librosa.amplitude_to_db(librosa.stft(x))
+#     filepath = path
+#     x, sr = librosa.load(filepath)
+#     # compute power spectrogram with stft(short-time fourier transform):
+#     # 基于stft，计算power spectrogram
+#     spectrogram = librosa.amplitude_to_db(librosa.stft(x))
 
-    print(len(x))
-    # show
-    librosa.display.specshow(spectrogram, y_axis="log")
-    plt.colorbar(format="%+2.0f dB")
+#     print(len(x))
+#     # show
+#     librosa.display.specshow(spectrogram, y_axis="log")
+#     plt.colorbar(format="%+2.0f dB")
 
-    plt.show()
+#     plt.show()
 
 
 def displaymfccprediction(path):

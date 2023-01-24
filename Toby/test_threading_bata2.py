@@ -29,7 +29,7 @@ class Audiowave:
         self.frames = []
         self.path = "./Toby/soundfile/"
 
-        self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
+        # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
         self.p = pyaudio.PyAudio()  # 實例化對象
 
@@ -117,6 +117,7 @@ class Audiowave:
 
     def micdata(self):  # 錄音數據
         self.data = self.stream.read(self.waveCHUNK)  # 錄音
+        self.frames.append(self.data)
 
     def Dynamic_micwave_init(self):  # 動態顯示圖像-初始化圖像
         self.ax[0].set_xlim(0, 1 / self.fps)
@@ -149,7 +150,6 @@ class Audiowave:
         count = 1
         for i in range(0, 19 * 22):
 
-            self.frames.append(self.data)
             # 將聲音記錄到串列中
 
             if i == (44 * count):
