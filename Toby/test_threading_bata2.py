@@ -150,14 +150,13 @@ class Audiowave:
         count = 1
         for i in range(0, 19 * 22):
 
-            # 將聲音記錄到串列中
-
             if i == (44 * count):
                 filepath = self.path + str(count) + ".wav"
                 wf = wave.open(filepath, "wb")  # 開啟聲音記錄檔
                 wf.setnchannels(self.wavechannel)  # 設定聲道
                 wf.setsampwidth(self.p.get_sample_size(self.format))  # 設定格式
                 wf.setframerate(self.framerate)  # 設定取樣頻率
+
                 wf.writeframes(
                     b"".join(self.frames[int(22 * (count - 1)) : int(22 * count)])
                 )  # 存檔
@@ -165,9 +164,10 @@ class Audiowave:
                 wf.close()
                 count = count + 0.5
                 mf.displaymfccprediction(filepath)
-        self.stream.stop_stream()  # 停止錄音
-        self.stream.close()  # 關閉串流
-        self.p.terminate()
+                time.sleep(0.5)
+        # self.stream.stop_stream()  # 停止錄音
+        # self.stream.close()  # 關閉串流
+        # self.p.terminate()
 
         return print("錄音結束...")
 
@@ -182,7 +182,7 @@ a = Audiowave()
 
 
 def recorder_run():
-    while True:
+    while 1:
         a.micdata()
 
 

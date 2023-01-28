@@ -67,7 +67,7 @@ def displaymfccprediction(path):
     data_label = []
     data_pred = []
     # warnings.simplefilter("ignore")
-    model = keras.models.load_model("./models/simple-train-nb1.hdf5")
+    model = keras.models.load_model("./models/simple-train-nb8000_50&25.hdf5")
     data, sr = librosa.load(path)
 
     wf = wave.open(path, "r")
