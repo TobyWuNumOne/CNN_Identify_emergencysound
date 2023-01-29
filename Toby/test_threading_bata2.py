@@ -163,11 +163,12 @@ class Audiowave:
 
                 wf.close()
                 count = count + 0.5
+
                 mf.displaymfccprediction(filepath)
                 time.sleep(0.5)
-        # self.stream.stop_stream()  # 停止錄音
-        # self.stream.close()  # 關閉串流
-        # self.p.terminate()
+        self.stream.stop_stream()  # 停止錄音
+        self.stream.close()  # 關閉串流
+        self.p.terminate()
 
         return print("錄音結束...")
 
@@ -176,6 +177,10 @@ class Audiowave:
         mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=13, dct_type=2, norm="ortho")
         normalized_mfcc = librosa.util.normalize(mfccs)
         return normalized_mfcc
+
+    def resample(self, filepath):
+
+        return
 
 
 a = Audiowave()

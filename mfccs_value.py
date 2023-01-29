@@ -25,6 +25,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 sys.path.append(BASE_DIR)
 
+set_model = "./models/simple-train-nb50&20.hdf5"
+
+
+def print_model():
+    return print(set_model)
+
 
 def displaymfccs(path):
     filepath = path
@@ -68,7 +74,7 @@ def displaymfccprediction(path):
     data_label = []
     data_pred = []
     # warnings.simplefilter("ignore")
-    model = keras.models.load_model("./models/simple-train-nb1.hdf5")
+    model = keras.models.load_model(set_model)
     data, sr = librosa.load(path)
 
     wf = wave.open(path, "r")
