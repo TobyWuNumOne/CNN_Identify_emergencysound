@@ -69,6 +69,19 @@ def displaySpectrum(path): # 显示语音频域谱线
     # plt.ylabel("幅度")
     # plt.show()
 
+def displaySpectrogram(path):     
+    
+        x, sr = librosa.load(path)
+    # compute power spectrogram with stft(short-time fourier transform):
+    # 基于stft，计算power spectrogram
+        spectrogram = librosa.amplitude_to_db(librosa.stft(x))
+        
+        print(len(x))
+        # show
+        librosa.display.specshow(spectrogram, x_axis="time",y_axis='log')
+        plt.colorbar(format='%+2.0f dB')
+       
+        plt.show()
 def displaymfccprediction(path):
             
     data_label=[]
@@ -115,8 +128,8 @@ def cut():
     
    
     displaymfccprediction(filepath)
-    displaySpectrum(filepath)
-
+    #displaySpectrum(filepath)
+    displaySpectrogram(filepath)
 
 print("開始錄音...")
 
