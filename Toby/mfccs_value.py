@@ -24,7 +24,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 sys.path.append(BASE_DIR)
 
-set_model = "./models/simple-train-nb8000_30&25.hdf5"
+set_model = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\models\\simple-train-nb50&20.hdf5"
 
 
 def print_model():
@@ -35,7 +35,7 @@ def displaymfccs(path):
     filepath = path
     data, sr = librosa.load(filepath)
     print(len(data))
-    # plt.plot(data)
+    plt.plot(data)
     mfccs = librosa.feature.mfcc(y=data, sr=sr, n_mfcc=13, dct_type=2, norm="ortho")
     # mfccs = sklearn.preprocessing.scale(mfccs)
     normalized_mfcc = librosa.util.normalize(mfccs)
@@ -43,7 +43,7 @@ def displaymfccs(path):
     print(normalized_mfcc.shape)
     # img = librosa.display.specshow(normalized_mfcc, x_axis="time", ax=ax)
     # fig.colorbar(img, ax=ax)
-    # plt.show()
+    plt.show()
 
 
 # def displaySpectrogram(path):
@@ -89,13 +89,13 @@ def displaymfccprediction(path):
     # print(normalized_mfcc.shape)
     normalized_mfcc = np.resize(normalized_mfcc, (13, 44))
 
-    # img = librosa.display.specshow(normalized_mfcc, x_axis="time")
+    #img = librosa.display.specshow(normalized_mfcc, x_axis="time")
 
     mfcc_reshaped = normalized_mfcc.reshape(1, 13, 44, 1)
 
     # fig.colorbar(img, ax=ax)
 
-    # plt.show()
+    #plt.show()
     pred = model.predict(mfcc_reshaped)
     # print(pred)
     data_pred.append(pred)

@@ -29,7 +29,7 @@ class Audiowave:
         self.fps = 24
         self.data = []
         self.frames = []
-        self.path = "./Toby/soundfile/"
+        self.path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\Toby\\soundfile\\"
 
         # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
@@ -78,13 +78,16 @@ class Audiowave:
                 wf.close()
                 count = count + 0.5
                 time.sleep(0.5)
-                self.resample(filepath)
+                #self.resample(filepath)
+                end_time=time.time()
+                print(end_time-start_time)
                 mf.displaymfccprediction(filepath)
 
         self.stream.stop_stream()  # 停止錄音
         self.stream.close()  # 關閉串流
         self.p.terminate()
-
+        
+        
         return print("錄音結束...")
 
     def mfcc(self):
@@ -108,6 +111,7 @@ def recorder_run():
 
 
 if __name__ == "__main__":
+    start_time=time.time()
     t1 = threading.Thread(target=recorder_run, args=())
     t1.setDaemon(True)
     t1.start()
