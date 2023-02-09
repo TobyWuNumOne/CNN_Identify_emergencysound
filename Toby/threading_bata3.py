@@ -22,19 +22,21 @@ import soundfile as sf
 
 class Audiowave:
     def __init__(self):
-
         self.wavewidth = 2
         self.wavechannel = 1
         self.framerate = 22050
         self.fps = 24
         self.data = []
         self.frames = []
+<<<<<<< Updated upstream
         self.path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\Toby\\soundfile\\"
 
         # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
+=======
+        self.path = "./Toby/soundfile/"
+>>>>>>> Stashed changes
         self.p = pyaudio.PyAudio()  # 實例化對象
-
         if self.wavewidth == 1:
             self.format = pyaudio.paInt8
         elif self.wavewidth == 2:
@@ -43,10 +45,8 @@ class Audiowave:
             self.format = pyaudio.paInt24
         elif self.wavewidth == 4:
             self.format = pyaudio.paFloat32
-
         # fps=waveframerate/waveCHUNK #每秒數據更新次數
         self.waveCHUNK = 1024  # int(self.framerate / self.fps)
-
         self.stream = self.p.open(
             format=self.format,
             channels=self.wavechannel,
@@ -63,18 +63,15 @@ class Audiowave:
         time.sleep(0.5)
         count = 1
         for i in range(0, 19 * 22):
-
             if i == (44 * count):
                 filepath = self.path + str(count) + ".wav"
                 wf = wave.open(filepath, "wb")  # 開啟聲音記錄檔
                 wf.setnchannels(self.wavechannel)  # 設定聲道
                 wf.setsampwidth(self.p.get_sample_size(self.format))  # 設定格式
                 wf.setframerate(self.framerate)  # 設定取樣頻率
-
                 wf.writeframes(
                     b"".join(self.frames[int(22 * (count - 1)) : int(22 * count)])
                 )  # 存檔
-
                 wf.close()
                 count = count + 0.5
                 time.sleep(0.5)
@@ -82,12 +79,14 @@ class Audiowave:
                 end_time=time.time()
                 print(end_time-start_time)
                 mf.displaymfccprediction(filepath)
-
         self.stream.stop_stream()  # 停止錄音
         self.stream.close()  # 關閉串流
         self.p.terminate()
+<<<<<<< Updated upstream
         
         
+=======
+>>>>>>> Stashed changes
         return print("錄音結束...")
 
     def mfcc(self):
