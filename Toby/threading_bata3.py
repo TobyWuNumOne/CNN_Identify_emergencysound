@@ -29,7 +29,7 @@ class Audiowave:
         self.data = []
         self.frames = []
         self.path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\Toby\\soundfile\\"
-
+        # self.path ="./Toby/soundfile"
         # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
         self.p = pyaudio.PyAudio()  # 實例化對象
