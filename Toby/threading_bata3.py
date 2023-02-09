@@ -28,14 +28,10 @@ class Audiowave:
         self.fps = 24
         self.data = []
         self.frames = []
-<<<<<<< Updated upstream
         self.path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\Toby\\soundfile\\"
 
         # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
-=======
-        self.path = "./Toby/soundfile/"
->>>>>>> Stashed changes
         self.p = pyaudio.PyAudio()  # 實例化對象
         if self.wavewidth == 1:
             self.format = pyaudio.paInt8
@@ -75,18 +71,13 @@ class Audiowave:
                 wf.close()
                 count = count + 0.5
                 time.sleep(0.5)
-                #self.resample(filepath)
-                end_time=time.time()
-                print(end_time-start_time)
+                # self.resample(filepath)
+                end_time = time.time()
+                print(end_time - start_time)
                 mf.displaymfccprediction(filepath)
         self.stream.stop_stream()  # 停止錄音
         self.stream.close()  # 關閉串流
         self.p.terminate()
-<<<<<<< Updated upstream
-        
-        
-=======
->>>>>>> Stashed changes
         return print("錄音結束...")
 
     def mfcc(self):
@@ -110,7 +101,7 @@ def recorder_run():
 
 
 if __name__ == "__main__":
-    start_time=time.time()
+    start_time = time.time()
     t1 = threading.Thread(target=recorder_run, args=())
     t1.setDaemon(True)
     t1.start()
