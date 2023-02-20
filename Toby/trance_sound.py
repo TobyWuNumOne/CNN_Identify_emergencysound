@@ -3,9 +3,9 @@ import scipy
 import os
 from alive_progress import alive_bar
 
+# 帶通濾波器
 # install
 # 修改資料即可對資料夾內所有檔案
-
 # 存放位置
 Folder = "./Toby/soundfile/"
 
