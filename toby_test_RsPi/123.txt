@@ -1,0 +1,114 @@
+【樹莓派】樹莓派4B安裝librosa、numpy、scipy庫
+查詢numpy和scipy的安裝方法請下拉看2021/7/19更新內容
+背景
+最近需要使用樹莓派製作一個分佈式系統，用於採集和處理音頻，librosa是一個常用的處理音頻的python庫，在樹莓派4B上直接使用pip3 install librosa會出現很多錯誤，網上教程參差不齊，自己搗鼓了兩天終於安裝成功，雖然不能安裝最新版的librosa，但是達到了我的預期目標，所以特意記錄下來。
+
+在安裝之前，建議重新安裝樹莓派系統，否則在安裝時可能會出現無法預知的錯誤。這裡使用到的有：樹莓派4B一個、16G SD卡一個、電腦屏幕一個、MiniHDMI轉HDMI線一根（用於連接樹莓派和屏幕）和一個信號較好的WIFI環境。
+
+第一次連接屏幕和樹莓派請參考
+
+使用Windows遠程連接樹莓派
+
+安裝LLVM
+在安裝librosa之前首先要安裝LLVM，目前樹莓派4B最高支持LLVM7版本，現在LLVM已經出到了11，所以安裝了LLVM7以上版本的樹莓派肯定無法安裝librosa。
+
+首先打開樹莓派的命令提示符，開啟root模式。
+
+</pi@raspberrypi:~ $ su root
+1
+如果你是第一次使用root，請參考
+第一次使用root
+
+之後安裝LLVM7
+
+root@raspberrypi:/home/pi# apt-get install lldb
+1
+添加配置文件至路徑
+
+root@raspberrypi:/home/pi# export PATH="/usr/lib/llvm-7/bin:$PATH"
+1
+升級pip
+
+root@raspberrypi:/home/pi# pip3 install --upgrade pip
+1
+LLVM7安裝完成
+
+安裝llvmlite
+LLVM和llvmlite之間版本關係如下圖
+
+LLVM-llvmlite
+我們使用的是LLVM7，因此安裝llvmlite的版本為0.27.0-0.30.0，我用的版本為0.30.0，使用pip3安裝
+
+root@raspberrypi:/home/pi# python3 -m pip install llvmlite==0.30.0
+1
+llvmlite安裝完成
+
+安裝numba
+經過查詢大量資料和安裝測試，numba0.40.0版本可以完美匹配llvmlite0.30.0版本，直接pip安裝
+
+root@raspberrypi:/home/pi# python3 -m pip install numba==0.40.0
+1
+安裝librosa
+root@raspberrypi:/home/pi# python3 -m pip install librosa==0.5.1
+1
+結束
+打開樹莓派自帶的Thonny IDE，發現librosa、llvmlite和numba已經正確安裝
+
+在這裡插入圖片描述
+
+2021/7/19更新
+經試驗發現，樹莓派4B可完美運行
+python 3.7+librosa0.8.0+numba0.48.0+numpy1.20.3+scipy1.6.3
+
+安裝步驟
+scipy、numpy的安裝互不影響，numba和librosa需要同時安裝
+安裝前確保樹莓派在最新版本
+升級方法
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo rpi-update
+1
+2
+3
+4
+進入root環境
+su root
+1
+安裝scipy
+sudo apt-get install libblas-dev
+sudo apt-get install liblapack-dev
+sudo apt-get install gfortran
+sudo apt-get install python-scipy
+pip3 install scipy==1.6.3
+1
+2
+3
+4
+5
+安裝LLVM、numba和librosa
+apt-get install lldb
+export PATH="/usr/lib/llvm-7/bin:$PATH"
+pip3 install llvmlite==0.31.0
+pip3 install numba==0.48.0
+pip3 install librosa==0.8.0
+pip3 install --upgrade setuptools
+pip3 install --upgrade pip
+1
+2
+3
+4
+5
+6
+7
+安裝numpy
+pip3 install numpy==1.20.3
+1
+退root環境
+exit
+1
+再次安裝numpy（注意numpy一定要安裝兩次，root環境和非root都需要安裝）
+pip3 install numpy==1.20.3
+1
+大功告成！
