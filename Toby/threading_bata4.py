@@ -29,7 +29,7 @@ class Audiowave:
         self.data = []
         self.frames = []
         # self.path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\Toby\\soundfile\\"
-        self.path = "./Toby/soundfile/"
+        self.path = "./Toby/soundfile"
         # self.fig, self.ax = plt.subplots(2, 1, figsize=(10, 8))
         # plt.subplot_tool()
         self.p = pyaudio.PyAudio()  # 實例化對象
@@ -71,7 +71,7 @@ class Audiowave:
                 wf.close()
                 count = count + 0.5
                 time.sleep(0.5)
-                # self.resample(filepath)  # resample
+                self.resample(filepath)  # resample
                 mf.displaymfccprediction(filepath)
         self.stream.stop_stream()  # 停止錄音
         self.stream.close()  # 關閉串流
@@ -98,8 +98,10 @@ def recorder_run():
         a.micdata()
 
 
-t1 = threading.Thread(target=recorder_run, args=())
-t1.setDaemon(True)
-t1.start()
-mf.print_model()
-a.identify()
+if __name__ == "__main__":
+    start_time = time.time()
+    t1 = threading.Thread(target=recorder_run, args=())
+    t1.setDaemon(True)
+    t1.start()
+    mf.print_model()
+    a.identify()

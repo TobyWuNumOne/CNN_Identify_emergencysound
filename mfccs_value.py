@@ -10,8 +10,7 @@ import numpy as np
 import pylab as plt
 import librosa.display
 import matplotlib.pyplot as plt
-import sklearn
-import numpy
+import time
 import wave
 from keras.models import load_model
 import librosa.display
@@ -19,7 +18,7 @@ import numpy as np
 import keras
 import os
 import sys
-
+import threading
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -28,8 +27,25 @@ sys.path.append(BASE_DIR)
 set_model = "./models/simple-train-nb50&20.hdf5"
 
 
+"""
+GPIO.setmode(GPIO.BCM)#TODO
+GPIO.setup(18, GPIO.OUT) # 設定腳位
+"""
+
+
 def print_model():
     return print(set_model)
+
+
+def output_thread():  # 還要更改腳位的位置
+    for i in range(1, 10):
+        # 在這裡進行輸出操作
+        # GPIO.output(18, GPIO.HIGH)
+        print("1")
+        time.sleep(0.02)
+        # GPIO.output(18, GPIO.LOW)
+        print("0")
+        time.sleep(0.02)
 
 
 def displaymfccs(path):
@@ -98,7 +114,7 @@ def displaymfccprediction(path):
 
     # plt.show()
     pred = model.predict(mfcc_reshaped)
-    # print(pred)
+    print(pred)
     data_pred.append(pred)
     """if pred[0,0]<=0.99 and pred[0,2]<=0.99:
         pred[0,1]=1"""
@@ -106,5 +122,10 @@ def displaymfccprediction(path):
     index = np.argmax(pred)
     prediction = labels[index]
     print(prediction)  # 預測結果
+
+    if prediction == "police" or prediction == "ambulance":  # TODO
+        t = threading.Thread(target=output_thread)
+        t.start()
+
     data_label.append(prediction)
-    # os.remove(path)
+    os.remove(path)
