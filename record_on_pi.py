@@ -11,24 +11,18 @@ import librosa
 import keras
 import numpy as np
 import os
-import matplotlib.pyplot as plt
+
+# import matplotlib.pyplot as plt
 import librosa.display
 from scipy import signal
 import threading
+import RPi.GPIO as GPIO
 
-# import RPi.GPIO as GPIO
 # from scipy.io.wavfile import read
 # from keras.models import load_model
 # import  soundfile as sf
 # import math
 # import tkinter as tk
-
-# window = tk.Tk()
-# 設定視窗標題
-# window.title('alarm')
-# window.geometry("600x180")
-# label_select=tk.Label(window)
-# a = tk.StringVar()  # 建立文字變數
 
 # SETTING
 labels = [
