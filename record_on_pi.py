@@ -67,6 +67,17 @@ def output_ambulance():  # 還要更改腳位的位置 #控制ＬＥＤ燈亮
         time.sleep(0.03)
 
 
+def ambulance_police():  # 還要更改腳位的位置 #控制ＬＥＤ燈亮
+    for i in range(1, 10):
+        # 在這裡進行輸出操作
+        GPIO.output(23, GPIO.HIGH)
+        GPIO.output(18, GPIO.HIGH)
+        time.sleep(0.03)
+        GPIO.output(23, GPIO.LOW)
+        GPIO.output(23, GPIO.LOW)
+        time.sleep(0.03)
+
+
 def displaymfccprediction(path):
     wf = wave.open(path, "r")
     rate = wf.getframerate()
@@ -83,6 +94,8 @@ def displaymfccprediction(path):
     data_pred.append(pred)
     if (pred[0] + pred[1] + pred[2]) >= 0.50 and pred[4] >= 0.5:
         print("ambulance&police")
+        polaaa = threading.Thread(target=ambulance_police)
+        polaaa.start()
     index = np.argmax(pred)
     print(index)
     prediction = labels[index]
@@ -90,9 +103,10 @@ def displaymfccprediction(path):
     if prediction == "police":
         pol = threading.Thread(target=output_police)
         pol.start()
-    elif prediction == "police":
+    elif prediction == "ambulance":
         a = threading.Thread(target=output_ambulance)
         a.start()
+
     os.remove(path)
 
 
