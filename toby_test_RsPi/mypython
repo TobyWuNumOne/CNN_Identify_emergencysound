@@ -1,0 +1,64 @@
+
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          mypython
+# Required-Start:    $syslog $network
+# Required-Stop:     $syslog $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the mypython
+# Description:       starts mypython using start-stop-daemon
+### END INIT INFO
+
+# /etc/init.d/mypython
+
+# 作者：目光比月se寂寞
+# 来源：CSDN
+# 原文：https://blog.csdn.net/zj0078/article/details/41926675
+# 版权声明：本文为博主原创文章，转载请附上博文链接！
+#
+# 1.新增檔案權限：可以執行
+#   sudo chmod +x /etc/init.d/mypython
+# 2.設定開機啟動
+#   sudo update-rc.d mypython defaults 95
+#   (如果要移除開機啟動：sudo update-rc.d mypython remove)
+#   ( mypython 有修改的話，要執行 systemctl daemon-reload )
+# 3.使用指令碼啟動、停止服務
+#   sudo service mypython start
+#   sudo service mypython stop
+
+case "$1" in
+    start)
+        echo -n "Starting python: "
+        echo "---------------------------------------------------------------------------------" >>/var/log/mypython
+        date +"! %Y/%m/%d %a %T : Starting python ." >>/var/log/mypython
+        echo start
+        #cd /home/pi/inv/
+        #./mqtt-ledv4-test.py >> /var/log/inv.log &
+        cd /home/pi/test/
+        ./recode_on_pi.py &
+        echo "Done."
+        echo ""
+        date +"! %Y/%m/%d %a %T : Finished." >>/var/log/mypython
+        echo "---------------------------------------------------------------------------------" >>/var/log/mypython
+        touch /var/lock/subsys/python
+        ;;
+    stop)
+        echo -n "Shutting Down python Listeners: "
+        echo "---------------------------------------------------------------------------------" >>/var/log/mypython
+        date +"! %Y/%m/%d %a %T : Shutting Down python." >>/var/log/mypython
+        echo "python"
+        #killall -9 mqtt-ledv4-test.py
+        killall -9 recode_on_pi.py
+        echo "Done."
+        rm -f /var/lock/subsys/python
+        echo "Done."
+        date +"! %Y/%m/%d %a %T : Finished." >>/var/log/mypython
+        echo "---------------------------------------------------------------------------------" >>/var/log/mypython
+        ;;
+    *)
+        echo "Usage: mypython { start | stop | restart }"
+        exit 1
+        ;;
+esac
+exit 0
