@@ -133,7 +133,7 @@ def cut():
 
 print("開始錄音...")
 
-path = "./a/"
+path = "C:\\Users\\Administrator\\Documents\\GitHub\\CNN_Identify_emergencysound\\"
 
     # 開啟錄音串流
 count = 1
