@@ -51,7 +51,7 @@ path = "./testwav/"  # TODO
 GPIO.setmode(GPIO.BCM)  # 設定腳位
 GPIO.setup(18, GPIO.OUT)  # 設定腳位
 GPIO.setup(23, GPIO.OUT)  # 設定腳位
-GPIO.setup(2, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
 model = keras.models.load_model(
     "simple_seperate_sec2_new2_retrain_bandpassfilter100&20.hdf5"  # TODO
 )
@@ -68,11 +68,12 @@ def output_police_oled():
     background.paste(logo, posn)
     device.display(background.convert(device.mode))
     time.sleep(1)
+    device.clear()
 
 
 def output_ambulance_oled():
     img_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "images", "A.png")
+        os.path.join(os.path.dirname(__file__), "images", "A(2).png")
     )
     logo = Image.open(img_path).convert("RGBA")
     background = Image.new("RGBA", device.size, "black")
@@ -80,6 +81,7 @@ def output_ambulance_oled():
     background.paste(logo, posn)
     device.display(background.convert(device.mode))
     time.sleep(1)
+    device.clear()
 
 
 def output_police():  # 還要更改腳位的位置 #控制ＬＥＤ燈亮
@@ -174,7 +176,8 @@ def cut(path):
     # displaySpectrogram(filepath)
 
 
-def main():
+if __name__ == "__main__":
+    print("開始錄音...")
     p = pyaudio.PyAudio()  # 建立 pyaudio 物件
     stream = p.open(  # 開啟錄音串流
         format=sample_format,
@@ -210,14 +213,8 @@ def main():
                 filepath = cut(path)  # 切割
                 displaymfccprediction(filepath)  # 辨識
                 count = count + 0.5
-                GPIO.output(2, GPIO.LOW)
+
     stream.stop_stream()  # 停止錄音
     stream.close()  # 關閉串流
     p.terminate()
-
-
-if __name__ == "__main__":
-    print("開始錄音...")
-    main()
     print("錄音結束...")
-    GPIO.output(2, GPIO.LOW)
