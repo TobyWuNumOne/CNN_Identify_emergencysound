@@ -1,4 +1,0 @@
-untitled17.py		錄音切割程式
-mfccs_value.py 		轉mfcc
-model_check 資料夾	訓練好的模型0202020
-

@@ -1,0 +1,35 @@
+# FastAPI 核心
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# WebSocket 支援
+websockets==12.0
+
+# CORS 支援
+fastapi-cors==0.0.6
+
+# AI/ML 依賴
+tensorflow==2.11.0
+librosa==0.10.0
+numpy==1.23.5
+scipy==1.10.1
+soundfile==0.12.1
+
+# 音頻處理
+pyaudio==0.2.11
+
+# 數據處理
+pandas==1.5.3
+
+# 檔案處理
+python-multipart==0.0.6
+
+# 環境變數
+python-dotenv==1.0.0
+
+# 日誌
+loguru==0.7.2
+
+# 開發工具
+pytest==7.4.3
+pytest-asyncio==0.21.1
